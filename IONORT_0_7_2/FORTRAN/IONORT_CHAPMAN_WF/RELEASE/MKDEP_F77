@@ -1,0 +1,2 @@
+-quiet "-pre.\Release\\" -Y -modInfo -errdel -f90 -f makefile -a -info -O2 -m32 -f77_compat
+ -info "ionort_chapman_wf.for" 
