@@ -81,4 +81,4 @@ ScanAll: "$(OUTDIR)" "$(OBJDIR)" MakeDepsAll
 # Scan for all F77, F95, and c/c++ dependencies
 #
 MakeDepsAll:
-	$(MKDEP) "@C:\Documents and Settings\Administrator\Desktop\Paper 2\IONORT Copy\FORTRAN\ionort_discrete_grid_wf\Release\mkdep_F77"
+	$(MKDEP) "$(OBJDIR)\mkdep_F77":

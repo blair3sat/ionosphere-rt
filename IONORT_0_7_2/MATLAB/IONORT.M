@@ -22,9 +22,10 @@ fclose(fid);
 
 % Esecuzione programma ionort.exe nella cartella 'source'
 oldFolder = cd('source');   
-[status,result] = system( ['ionort_', ionort_model] );
+[status,result] = system( ['ionort_', ionort_model,'.exe'] );
 cd(oldFolder);
-
+status
+result
 % Conversione output in matrice numerica
 coordinates = str2num(result);
 
