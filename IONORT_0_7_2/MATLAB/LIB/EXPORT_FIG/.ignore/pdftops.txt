@@ -1,1 +1,0 @@
-bin\xpdf\pdftops.exe
