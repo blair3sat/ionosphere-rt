@@ -29,7 +29,7 @@ C***********************************************************************
   999 FORMAT (A4,1X,A4,/)                                               NITI026
       KOLL=4H  NO                                                       NITI027
       IF (COLL.NE.0.) KOLL=4HWITH                                       NITI028
-C********* CONSTANTS                                                    NITI029
+C*********CONSTANTS                                                    NITI029
       PI=3.1415926536                                                   NITI030
       PIT2=2.*PI                                                        NITI031
       PID2=PI/2.                                                        NITI032
@@ -38,7 +38,7 @@ C********* CONSTANTS                                                    NITI029
       C=2.997925E5                                                      NITI035
       K=2.81785E-15*C**2/PI                                             NITI036
       LOGTEN=ALOG(10.)                                                  NITI037
-C********* INITIALIZE SOME VARIABLES IN THE W ARRAY                     NITI038
+C*********INITIALIZE SOME VARIABLES IN THE W ARRAY                     NITI038
       DO 5 NW=1,400                                                     NITI039
     5 W(NW)=0.                                                          NITI040
       PLON=0.                                                           NITI041
@@ -53,7 +53,7 @@ C********* INITIALIZE SOME VARIABLES IN THE W ARRAY                     NITI038
       FACTR=0.5                                                         NITI050
       MAXSTP=1000.                                                      NITI051
       HOP=1.                                                            NITI052
-C********* READ W ARRAY AND WRITE NON-ZERO VALUES                       NITI053
+C*********READ W ARRAY AND WRITE NON-ZERO VALUES                       NITI053
       CALL READW                                                        NITI054
       IF (SKIP.EQ.0.) SKIP=MAXSTP                                       NITI056
    12 RAY=SIGN(1.,RAY)                                                  NITI057
@@ -69,7 +69,7 @@ C********* READ W ARRAY AND WRITE NON-ZERO VALUES                       NITI053
       MFLD(2)=4H----                                                    NITI067
    16 MODSAV=MODX(2)                                                    NITI068
       IF (PERT.EQ.0.) MODX(2)=4H  NO                                    NITI069
-C    
+C
       WRITE(6,1050)                                                     NITI077
  1050 FORMAT (85H INITIAL VALUES FOR THE W ARRAY -- ALL ANGLES IN RADIANNITI078
      1S, ONLY NONZERO VALUES PRINTED/)                                  NITI079
@@ -77,7 +77,7 @@ C
       IF (W(NW).NE.0.) WRITE(6,1700) NW,W(NW)                           NITI081
  1700 FORMAT (I4,E20.10,/)                                              NITI082
    17 CONTINUE                                                          NITI083
-C********* INITIALIZE PARAMETERS FOR INTEGRATION SUBROUTINE RKAM        NITI087
+C*********INITIALIZE PARAMETERS FOR INTEGRATION SUBROUTINE RKAM        NITI087
       N=6                                                               NITI088
       DO 20 NR=7,20                                                     NITI089
       IF (W(50+NR).NE.0.) N=N+1                                         NITI090
@@ -89,8 +89,8 @@ C********* INITIALIZE PARAMETERS FOR INTEGRATION SUBROUTINE RKAM        NITI087
       E2MAX=STPMAX                                                      NITI096
       E2MIN=STPMIN                                                      NITI097
       FACT=FACTR                                                        NITI098
-C********* DETERMINE TRANSMITTER LOCATION IN COMPUTATIONAL COORDINATE   NITI099
-C********* SYSTEM (GEOMAGNETIC COORDINATES IF DIPOLE FIELD IS USED)     NITI100
+C*********DETERMINE TRANSMITTER LOCATION IN COMPUTATIONAL COORDINATE   NITI099
+C*********SYSTEM (GEOMAGNETIC COORDINATES IF DIPOLE FIELD IS USED)     NITI100
       R0=EARTHR+XMTRH                                                   NITI101
       SP=SIN (PLAT)                                                     NITI102
       CP=SIN (PID2-PLAT)                                                NITI103
@@ -101,7 +101,7 @@ C********* SYSTEM (GEOMAGNETIC COORDINATES IF DIPOLE FIELD IS USED)     NITI100
       ALPHA=ATAN2(-SDPH*CP,-CDPH*CP*SL+SP*CL)                           NITI108
       TH0=ACOS (CDPH*CP*CL+SP*SL)                                       NITI109
       PH0=ATAN2(SDPH*CL,CDPH*SP*CL-CP*SL)                               NITI110
-C********* LOOP ON FREQUENCY, AZIMUTH ANGLE, AND ELEVATION ANGLE        NITI111
+C*********LOOP ON FREQUENCY, AZIMUTH ANGLE, AND ELEVATION ANGLE        NITI111
       NFREQ=1                                                           NITI112
       IF (FSTEP.NE.0.) NFREQ=(FEND-FBEG)/FSTEP+1.5                      NITI113
       NAZ=1                                                             NITI114
@@ -129,7 +129,7 @@ C********* LOOP ON FREQUENCY, AZIMUTH ANGLE, AND ELEVATION ANGLE        NITI111
       T=0.                                                              NITI136
       RSTART=1.                                                         NITI137
 C     SGN=1.  (NEED FOR RAY TRACING IN COMPLEX SPACE.)                  NITI138
-C********* ALLOW IONOSPHERIC MODEL SUBROUTINES TO READ AND WRITE DATA   NITI139
+C*********ALLOW IONOSPHERIC MODEL SUBROUTINES TO READ AND WRITE DATA   NITI139
       CALL RINDEX                                                       NITI140
       WRITE(6,1000) MODX(1),MODX(2),MFLD(1)                             NITI143
      1,KOLL,MODRIN(1),MODRIN(2),MODRIN(3)                               
@@ -164,7 +164,7 @@ C*******************************************************************************
       DO 35 NN=7,N                                                      NITI160
    35 R(NN)=0.                                                          NITI161
       CALL TRACE                                                        NITI162
-C*****CALCOLO DEL RITARDO DI GRUPPO****                                 NITI163
+C *****CALCULATION OF GROUP DELAY ****NITI163
       C_km_ms=C/1000.0                                                  NITI164
       GRPDELAY=T/C_km_ms                                                NITI165
       PRINT 3501,GRPDELAY                                                       AZZ
@@ -189,7 +189,7 @@ C*******************************************************************************
    55 WRITE(6,*)'THE END'                                               NITI175
       END                                                               NITI176-
 C     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-C     +++                          NITI END                          +++
+C +++ NITI END +++
 C     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       SUBROUTINE READW                                                  READ001
       COMMON /CONST/ PI,PIT2,PID2,DEGS,RAD,K,C,LOGTEN                   READ002
@@ -203,9 +203,9 @@ C     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    10 RETURN                                                            READ010
          END                                                            READ011-
 C ******************************************************************************
-C     ALEX: Lettura file 'GRIDPROFILES.txt',                            
-C           scrittura file 'GRIDPROFILES_TEST.txt',                     
-C           inizializzazione matrice per "plasma frequency profiles" FNC(K,J,I) 
+C     ALEX: Lettura file 'GRIDPROFILES.txt',
+C           scrittura file 'GRIDPROFILES_TEST.txt',
+C matrix initialisation for "plasma frequency profiles" FNC (K, J, I)
 C ******************************************************************************
       SUBROUTINE GRIDPROFILES                                           GPROF000
 C ******************************************************************************
@@ -249,7 +249,7 @@ C      PRINT 4,LINEa                                                     GPROF00
       WRITE(10,4) LINEa                                                 GPROF000
     4 FORMAT(A24)                                                       GPROF000
       READ(9,5) LINEb                                                   GPROF000
-C      PRINT 5,LINEb                                                     GPROF000
+C PRINT 5,LINE GPROF 000
       WRITE(10,5) LINEb                                                 GPROF000
     5 FORMAT(A16)                                                       GPROF000
       DO 8 K=1,NOC                                                      GPROF000
@@ -282,15 +282,15 @@ C     CALCULATES THE RAY PATH                                           TRAC002
       EQUIVALENCE (EARTHR,W(2)),(RCVRH,W(20)),(HOP,W(22)),(MAXSTP,W(23))TRAC014
      
 C*******************************************************************************
-C     ALEX: Per ogni iterazione di raytracing,                          
-C           è stato necessario introdurre                               
-C           una variabile logica di controllo                           
-C           che forzasse, una ed una sola volta, la stampa              
-C           su file dell'input '+++ RAY OUT THE IONOSPHERE +++'         
-C           e da schermo della coordinata speciale '111.1 0 3'.         
+C ALEX: For each raytracing iteration,
+It was necessary to introduce
+There is a logical control variable
+C that forced printing once and only once
+C           su file dell'input '+++ RAY OUT THE IONOSPHERE +++'
+C and from the screen of the special coordinate '111.1 0 3'.
 C*******************************************************************************
       LOGICAL OUT                                                       
-C      IF (NEWRAY) OUT=.FALSE.                                           
+C      IF (NEWRAY) OUT=.FALSE.
       OUT=.FALSE.                                                       
 C*******************************************************************************
      
@@ -300,8 +300,8 @@ C                                                                       TRAC018
       RSTART=1.                                                         TRAC019
       CALL HAMLTN                                                       TRAC020
       HOME=DRDT(1)*(R(1)-EARTHR-RCVRH).GE.0.                            TRAC021
-C*********                                                              TRAC022
-C*********                                                              TRAC023
+C*********                                                             TRAC022
+C*********                                                             TRAC023
       IHOP=0                                                            TRAC024
       WRITE(6,1701)XMTR,RCVRH,NHOP,MAXSTP,HOME                          TRAC025
  1701 FORMAT(/,26H Begin TRACE h TX and h RX,2(2X,F10.5)                TRAC026
@@ -309,12 +309,12 @@ C*********                                                              TRAC023
       HTMAX=0.                                                          TRAC027
       NEWRAY=.TRUE.                                                     TRAC028
       THERE=R(1)-EARTHR.EQ.RCVRH                                        TRAC029
-C********* LOOP ON NUMBER OF HOPS                                       TRAC030
+C*********LOOP ON NUMBER OF HOPS                                       TRAC030
    10 IHOP=IHOP+1                                                       TRAC031
       IF (IHOP.GT.NHOP) RETURN                                          TRAC032
       PENET=.FALSE.                                                     TRAC033
       APHT=RCVRH                                                        TRAC034
-C********* LOOP ON MAXIMUM NUMBER OF STEPS PER HOP                      TRAC035
+C*********LOOP ON MAXIMUM NUMBER OF STEPS PER HOP                      TRAC035
       DO 79 J=1,MAX                                                     TRAC036
       H=R(1)-EARTHR                                                     TRAC037
       IF (ABS(H-RCVRH).GT.ABS(APHT-RCVRH)) APHT=H                       TRAC038
@@ -330,7 +330,7 @@ C********* LOOP ON MAXIMUM NUMBER OF STEPS PER HOP                      TRAC035
       IF (THERE) GO TO 51                                               TRAC048
       IF (MINDIS) GO TO 40                                              TRAC049
       IF (GROUND) GO TO 60                                              TRAC050
-C *****     QUI CHIAMAVA RAYPLOT                                        TRAC051
+C *****HERE CALLED RAYPLOT TRAC051
       IF (PERIGE) GO TO 79                                              TRAC052
    12 DO 13 L=1,N                                                       TRAC053
       ROLD(L)=R(L)                                                      TRAC054
@@ -376,10 +376,10 @@ C*******************************************************************************
       IF (ROLD(I)*R(I).LT.0.) WRITE(6,*)'WAVE REVERSE'                  TRAC076
    14 CONTINUE                                                          TRAC077
       GO TO 75                                                          TRAC078
-C********* RAY WENT UNDERGROUND                                         TRAC079
+C*********RAY WENT UNDERGROUND                                         TRAC079
    20 CALL BACK UP(0.)                                                  TRAC080
       GO TO 60                                                          TRAC081
-C********* RAY MAY HAVE MADE A CLOSEST APPROACH                         TRAC082
+C*********RAY MAY HAVE MADE A CLOSEST APPROACH                         TRAC082
    30 CALL GRAZE(RCVRH)                                                 TRAC083
       IF (THERE) GO TO 51                                               TRAC084
    40 DRDT(1)=0.                                                        TRAC085
@@ -399,7 +399,7 @@ C*******************************************************************************
 C*******************************************************************************
      
       GO TO 89                                                          TRAC092
-C********* RAY CROSSED RECEIVER HEIGHT                                  TRAC093
+C*********RAY CROSSED RECEIVER HEIGHT                                  TRAC093
    50 CALL BACK UP(RCVRH)                                               TRAC094
       THERE=.TRUE.                                                      TRAC095
    51 R(1)=EARTHR+RCVRH                                                 TRAC096
@@ -411,7 +411,7 @@ C********* RAY CROSSED RECEIVER HEIGHT                                  TRAC093
       IF (IHOP.GE.NHOP) RETURN                                          TRAC102
       IHOP=IHOP+1                                                       TRAC103
       APHT=RCVRH                                                        TRAC104
-C********* GROUND REFLECT                                               TRAC105
+C*********GROUND REFLECT                                               TRAC105
    60 R(1)=EARTHR                                                       TRAC106
       IF (ABS(RCVRH).GT.ABS(APHT-RCVRH)) APHT=0.                        TRAC107
       R(4)=ABS (R(4))                                                   TRAC108
@@ -436,12 +436,12 @@ C*******************************************************************************
       GO TO 89                                                          TRAC118
    65 H=0.                                                              TRAC119
       THERE=.FALSE.                                                     TRAC120
-C*********                                                              TRAC121
+C*********                                                             TRAC121
    75 CONTINUE                                                          TRAC122
       IF (H.GT.HMAX.AND.H.GT.RCVRH.AND.DRDT(1).GT.0.) GO TO 90          TRAC123
       IF (MOD(J,NSKIP).EQ.0) CONTINUE                                   TRAC124
    79 CONTINUE                                                          TRAC125
-C********* EXCEEDED MAXIMUM NUMBER OF STEPS                             TRAC126
+C*********EXCEEDED MAXIMUM NUMBER OF STEPS                             TRAC126
       HPUNCH=H                                                          TRAC127
      
 C*******************************************************************************
@@ -450,10 +450,10 @@ C*******************************************************************************
 C*******************************************************************************
      
       RETURN                                                            TRAC129
-C*********                                                              TRAC130
+C*********                                                             TRAC130
    89 HOME=.TRUE.                                                       TRAC131
       GO TO 10                                                          TRAC132
-C********* RAY PENETRATED                                               TRAC133
+C*********RAY PENETRATED                                               TRAC133
    90 PENET=.TRUE.                                                      TRAC134
       HPUNCH=H                                                          TRAC135
      
@@ -489,12 +489,12 @@ C*******************************************************************************
       DATA  NSTEP/500/                                                  REAC 16
      
 C*******************************************************************************
-C     ALEX: Per ogni iterazione di raytracing,                          
-C           è stato necessario introdurre                               
-C           una variabile logica di controllo                           
-C           che forzasse, una ed una sola volta, la stampa              
-C           su file dell'input '+++ RAY IN THE IONOSPHERE +++'          
-C           e da schermo della coordinata speciale '111.1 0 1'.         
+C ALEX: For each raytracing iteration,
+It was necessary to introduce
+There is a logical control variable
+C that forced printing once and only once
+C           su file dell'input '+++ RAY IN THE IONOSPHERE +++'
+C and from the screen of the special coordinate '111.1 0 1'.
 C*******************************************************************************
       LOGICAL IN                                                        
       IF (NEWRAY) IN=.FALSE.                                            
@@ -505,52 +505,52 @@ C*******************************************************************************
       IF (.NOT.NEWRAY.AND..NOT.RSPACE)  WRITE(6,*)'(8HEXIT ION,0.)'     REAC 19
       NEWRAY=.FALSE.                                                    REAC 20
       V=SQRT(R(4)**2+R(5)**2+R(6)**2)                                   REAC 21
-C********* NORMALIZE THE WAVE NORMAL DIRECTION TO ONE                   REAC 22
+C*********NORMALIZE THE WAVE NORMAL DIRECTION TO ONE                   REAC 22
       R(4)=R(4)/V                                                       REAC 23
       R(5)=R(5)/V                                                       REAC 24
       R(6)=R(6)/V                                                       REAC 25
-C********* NEGATIVE OF DISTANCE ALONG RAY TO CLOSEST APPROACH TO CENTER REAC 26
-C********* OF EARTH                                                     REAC 27
+C*********NEGATIVE OF DISTANCE ALONG RAY TO CLOSEST APPROACH TO CENTER REAC 26
+C*********OF EARTH                                                     REAC 27
       UP=R(1)*R(4)                                                      REAC 28
       RADG=EARTHR**2-R(1)**2*(R(5)**2+R(6)**2)                          REAC 29
       DISTG=SQRT (AMAX1(0.,RADG))                                       REAC 30
-C********* DISTANCE ALONG RAY TO FIRST INTERSECTION WITH OR CLOSEST     REAC 31
-C********* APPROACH TO THE EARTH                                        REAC 32
+C*********DISTANCE ALONG RAY TO FIRST INTERSECTION WITH OR CLOSEST     REAC 31
+C*********APPROACH TO THE EARTH                                        REAC 32
       SG=-UP-DISTG                                                      REAC 33
-C********* CROSSG IS TRUE IF THE RAY WILL INTERSECT OR TOUCH THE EARTH  REAC 34
+C*********CROSSG IS TRUE IF THE RAY WILL INTERSECT OR TOUCH THE EARTH  REAC 34
       CROSSG=UP.LT.0..AND.RADG.GE.0.                                    REAC 35
       RADR=(EARTHR+RCVRH)**2-R(1)**2*(R(5)**2+R(6)**2)                  REAC 36
       DISTR=SQRT (AMAX1(0.,RADR))                                       REAC 37
-C********* DISTANCE ALONG RAY TO THE FIRST INTERSECTION WITH OR CLOSEST REAC 38
-C********* APPROACH TO THE RECEIVER HEIGHT                              REAC 39
+C*********DISTANCE ALONG RAY TO THE FIRST INTERSECTION WITH OR CLOSEST REAC 38
+C*********APPROACH TO THE RECEIVER HEIGHT                              REAC 39
       SR=DISTR-UP                                                       REAC 40
       IF (UP.LT.0..AND.DISTR.LT.-UP.AND.R(1).NE.EARTHR+RCVRH) SR=-DISTR REAC 41
      1 -UP                                                              REAC 42
-C********* CROSSR IS TRUE IF THE RAY WILL INTERSECT WITH OR MAKE A      REAC 43
-C********* CLOSEST APPROACH TO THE RECEIVER HEIGHT                      REAC 44
+C*********CROSSR IS TRUE IF THE RAY WILL INTERSECT WITH OR MAKE A      REAC 43
+C*********CLOSEST APPROACH TO THE RECEIVER HEIGHT                      REAC 44
       CROSSR=R(4).LT.0..OR.R(1).LT.(EARTHR+RCVRH)                       REAC 45
       CROSS=CROSSG.OR.CROSSR                                            REAC 46
-C********* MAXIMUM DISTANCE IN WHICH TO LOOK FOR THE IONOSPHERE         REAC 47
+C*********MAXIMUM DISTANCE IN WHICH TO LOOK FOR THE IONOSPHERE         REAC 47
       S1=AMIN1(SR,SG)                                                   REAC 48
       IF(.NOT.CROSSG) S1=SR                                             REAC 49
       IF (UP.GE.0.) GO TO 15                                            REAC 50
       CROSS=.TRUE.                                                      REAC 51
-C********* IF RAY IS GOING DOWN, S1 IS AT MOST THE DISTANCE TO A PERIGEEREAC 52
+C*********IF RAY IS GOING DOWN, S1 IS AT MOST THE DISTANCE TO A PERIGEEREAC 52
       S1=AMIN1(S1,-UP)                                                  REAC 53
-C********* CONVERT THE POSITION AND DIRECTION OF THE RAY TO CARTESIAN   REAC 54
-C********* COORDINATES                                                  REAC 55
+C*********CONVERT THE POSITION AND DIRECTION OF THE RAY TO CARTESIAN   REAC 54
+C*********COORDINATES                                                  REAC 55
    15 CALL POLCAR                                                       REAC 56
      
 C      SSTEP=100.                                                        REAC 57
 C*******************************************************************************
-C     ALEX: Originariamente, SSTEP=100.0 .                              
-C           In realtà, applicando la trigonometria,                     
-C           si può dimostrare, in prima approssimazione,                
-C           che l'elemento di ascissa curvilinea è ...                  
+C     ALEX: Originariamente, SSTEP=100.0 .
+C In reality, applying trigonometry,
+C can be shown, as a first approximation,
+C that the curvilinear abscissa element is ...
 C*******************************************************************************
       SSTEP=STEP1/COS(TH)                                                       GPROF000
 C*******************************************************************************
-C     FORMULA ESATTA PER L'ELEMENTO DI ASCISSA CURVILINEA IN COORDINATE POLARI: 
+C EXACT FORMULA FOR THE CURVILINEE ASCISSA ELEMENT IN POLAR COORDINATES:
 C*******************************************************************************
 C      SSTEP=STEP1*SQRT(1+(R(1)*(DTHDT/DRDT(1)))**2+                             GPROF000
 C     1(R(1)*SIN(TH)*(DPHDT/DRDT(1)))**2)                                        GPROF000
@@ -559,23 +559,23 @@ C*******************************************************************************
       S=SSTEP                                                           REAC 58
       DO 20 I=1,NSTEP                                                   REAC 59
       IF ((S-SSTEP).GT.S1.AND.CROSS) GO TO 25                           REAC 60
-C********* CONVERT POSITION AND DIRECTION TO SPHERICAL POLAR COORDINATESREAC 61
-C********* AT A DISTANCE S ALONG THE RAY                                REAC 62
+C*********CONVERT POSITION AND DIRECTION TO SPHERICAL POLAR COORDINATESREAC 61
+C*********AT A DISTANCE S ALONG THE RAY                                REAC 62
       CALL CARPOL                                                       REAC 63
       CALL ELECTX                                                       REAC 64
-C********* FREE SPACE                                                   REAC 65
+C*********FREE SPACE                                                   REAC 65
       IF (X.EQ.0) GO TO 20                                              REAC 66
       CALL RINDEX                                                       REAC 67
-C********* NORMALIZE THE WAVE NORMAL DIRECTION TO ONE                   REAC 22
+C*********NORMALIZE THE WAVE NORMAL DIRECTION TO ONE                   REAC 22
       R(4)=R(4)/V                                                       REAC 22a
       R(5)=R(5)/V                                                       REAC 22b
       R(6)=R(6)/V                                                       REAC 22c
-C********* EFFECTIVELY FREE SPACE                                       REAC 68
+C*********EFFECTIVELY FREE SPACE                                       REAC 68
       IF (SPACE) GO TO 20                                               REAC 69
       IF (SSTEP.LT.0.5E-4) GO TO 25                                     REAC 70
-C********* RAY IN THE IONOSPHERE.  STEP BACK OUT                        REAC 71
+C*********RAY IN THE IONOSPHERE.  STEP BACK OUT                        REAC 71
       S=S-SSTEP                                                         REAC 72
-C********* DECREASE STEP SIZE                                           REAC 73
+C*********DECREASE STEP SIZE                                           REAC 73
       SSTEP=SSTEP/10.                                                   REAC 74
    20 S=S+SSTEP                                                         REAC 75
      
@@ -592,32 +592,32 @@ C*******************************************************************************
      
       STOP                                                              REAC 78
    25 IF(CROSS) S=AMIN1(S,S1)                                           REAC 79
-C********* CONVERT POSITION AND DIRECTION TO SPHERICAL POLAR COORDINATESREAC 80
-C********* AT A DISTANCE S ALONG THE RAY                                REAC 81
+C*********CONVERT POSITION AND DIRECTION TO SPHERICAL POLAR COORDINATESREAC 80
+C*********AT A DISTANCE S ALONG THE RAY                                REAC 81
       CALL CARPOL                                                       REAC 82
-C********* AVOID THE RAY BEING SLIGHTLY UNDERGROUND                     REAC 83
+C*********AVOID THE RAY BEING SLIGHTLY UNDERGROUND                     REAC 83
       R(1)=AMAX1(R(1),EARTHR)                                           REAC 84
-C********* ONE STEP INTEGRATION                                         REAC 85
+C*********ONE STEP INTEGRATION                                         REAC 85
       IF (N.LT.7) GO TO 31                                              REAC 86
       DO 30 NN=7,N                                                      REAC 87
    30 R(NN)=R(NN)+S*DRDT(NN)                                            REAC 88
    31 T=T+S                                                             REAC 89
       CALL RINDEX                                                       REAC 90
-C********* AT A PERIGEE                                                 REAC 91
+C*********AT A PERIGEE                                                 REAC 91
       PERIGE=S.EQ.(-UP)                                                 REAC 92
-C********* CORRECT MINOR ERRORS                                         REAC 93
+C*********CORRECT MINOR ERRORS                                         REAC 93
       IF (PERIGE) R(4)=0.                                               REAC 94
-C********* KEEP CONSISTENCY AFTER CORRECTING MINOR ERRORS               REAC 95
+C*********KEEP CONSISTENCY AFTER CORRECTING MINOR ERRORS               REAC 95
       DRDT(1)=R(4)                                                      REAC 96
-C********* ON THE GROUND                                                REAC 97
+C*********ON THE GROUND                                                REAC 97
       GROUND=S.EQ.SG.AND.CROSSG                                         REAC 98
-C********* AT THE RECEIVER HEIGHT                                       REAC 99
+C*********AT THE RECEIVER HEIGHT                                       REAC 99
       THERE=S.EQ.SR.AND.CROSSR.AND..NOT.PERIGE                          REAC100
-C********* AT A CLOSEST APPROACH TO THE RECEIVER HEIGHT                 REAC101
+C*********AT A CLOSEST APPROACH TO THE RECEIVER HEIGHT                 REAC101
       MINDIS=PERIGE.AND.S.EQ.SR.AND.CROSSR                              REAC102
       RSPACE=SPACE                                                      REAC103
       V=SQRT(N2/(R(4)**2+R(5)**2+R(6)**2))                              REAC104
-C********* RENORMALIZE THE WAVE NORMAL DIRECTION TO = SQRT(REAL(N**2))  REAC105
+C*********RENORMALIZE THE WAVE NORMAL DIRECTION TO = SQRT(REAL(N**2))  REAC105
       R(4)=R(4)*V                                                       REAC106
       R(5)=R(5)*V                                                       REAC107
       R(6)=R(6)*V                                                       REAC108
@@ -643,41 +643,41 @@ C*******************************************************************************
       EQUIVALENCE (EARTHR,W(2)),(INTYP,W(41)),(STEP1,W(44))             BACK005
       REAL INTYP                                                        BACK006
       LOGICAL GROUND,PERIGE,THERE,MINDIS,NEWRAY,HOME                    BACK007
-C********* DIAGNOSTIC PRINTOUT                                          BACK008
-C        CALL PRINTR (8HBACK UP0,0.)                                    BACK009
-C********* GOING AWAY FROM THE HEIGHT HS                                BACK010
+C*********DIAGNOSTIC PRINTOUT                                          BACK008
+C CALL PRINTR (8HBACK UP0,0.) BACK009
+C*********GOING AWAY FROM THE HEIGHT HS                                BACK010
       HOME=DRDT(1)*(R(1)-EARTHR-HS).GE.0.                               BACK011
       IF (HS.GT.0..AND..NOT.HOME.OR.HS.EQ.0..AND.DRDT(1).GT.0.) GO TO 30BACK012
-C********* FIND NEAREST INTERSECTION OF RAY WITH THE HEIGHT HS          BACK013
+C*********FIND NEAREST INTERSECTION OF RAY WITH THE HEIGHT HS          BACK013
       DO 10 I=1,10                                                      BACK014
       STEP=-(R(1)-EARTHR-HS)/DRDT(1)                                    BACK015
      
 C*******************************************************************************
-C     NB: La variabile STP è definita ma non inizializzata,             
-C         quindi si omette la seguente istruzione                       
-C         che potrebbe dar luogo a valori aleatori.                     
+C NB: The STP variable is defined but not initialized,
+C then the following statement is omitted
+C which could give rise to random values.
 C*******************************************************************************
 C      STEP=SIGN(AMIN1(ABS(STP),ABS(STEP)),STEP)                         BACK016
 C*******************************************************************************
      
       IF (ABS(R(1)-EARTHR-HS).LT..5E-4.AND.ABS(STEP).LT.1.) GO TO 60    BACK017
-C********* DIAGNOSTIC PRINTOUT                                          BACK018
+C*********DIAGNOSTIC PRINTOUT                                          BACK018
       WRITE(6,*)'(8HBACK UP1,0.)'                                       BACK019
       MODE=1                                                            BACK020
       RSTART=1.                                                         BACK021
       CALL RKAM                                                         BACK022
    10 RSTART=1.                                                         BACK023
-C********* IF A CLOSEST APPROACH COULD NOT BE FOUND IN 10 STEPS, IT     BACK044
-C********* PROBABLY MEANS THAT THE RAY INTERSECTS THE HEIGHT HS         BACK045
+C*********IF A CLOSEST APPROACH COULD NOT BE FOUND IN 10 STEPS, IT     BACK044
+C*********PROBABLY MEANS THAT THE RAY INTERSECTS THE HEIGHT HS         BACK045
    30 CONTINUE                                                          BACK046
-C********* DIAGNOSTIC PRINTOUT                                          BACK047
+C*********DIAGNOSTIC PRINTOUT                                          BACK047
       WRITE(6,*)'(8HBACK UP2,0.)'                                       BACK048
       MODE=1                                                            BACK049
-C********* ESTIMATE DISTANCE TO NEAREST INTERSECTION OF RAY WITH HEIGHT BACK050
-C********* HS BEHIND THE PRESENT RAY POINT                              BACK051
+C*********ESTIMATE DISTANCE TO NEAREST INTERSECTION OF RAY WITH HEIGHT BACK050
+C*********HS BEHIND THE PRESENT RAY POINT                              BACK051
      
 C*******************************************************************************
-C     ERRATA CORRIGE DA DISPENSE DI JONES STEVENSON                     
+C CORRIGE CORRIGE FROM JONES STEVENSON'S DISPENSE
 C*******************************************************************************
 C      STEP=(-R(4)-SQRT(R(4)**2-2.*(R(1)-EARTHR-HS)*DRDT(4)))/DRDT(4)    BACK052
       H=R(1)-EARTHR                                                     BACK052BIS
@@ -687,33 +687,33 @@ C*******************************************************************************
       RSTART=1.                                                         BACK053
       CALL RKAM                                                         BACK054
       RSTART=1.                                                         BACK055
-C********* FIND NEAREST INTERSECTION OF RAY WITH HEIGHT HS              BACK056
+C*********FIND NEAREST INTERSECTION OF RAY WITH HEIGHT HS              BACK056
       DO 40 I=1,10                                                      BACK057
       STEP=-(R(1)-EARTHR-HS)/DRDT(1)                                    BACK058
      
 C*******************************************************************************
-C     NB: La variabile STP è definita ma non inizializzata,             
-C         quindi si omette la seguente istruzione                       
-C         che potrebbe dar luogo a valori aleatori.                     
+C NB: The STP variable is defined but not initialized,
+C then the following statement is omitted
+C which could give rise to random values.
 C*******************************************************************************
 C      STEP=SIGN(AMIN1(ABS(STP),ABS(STEP)),STEP)                         BACK059
 C*******************************************************************************
      
 C*******************************************************************************
-C     ERRATA CORRIGE DA DISPENSE DI JONES STEVENSON                     
+C CORRIGE CORRIGE FROM JONES STEVENSON'S DISPENSE
 C*******************************************************************************
 C      IF(ABS(R(1)-EARTHR-HS).LT..5E-4.AND.ABS(STEP).LT.1.) GO TO 60     BACK060
       IF(ABS(R(1)-EARTHR-HS).LT..5E-4.AND.ABS(STEP).LT.1.) GO TO 50     BACK060BIS
 C*******************************************************************************
      
-C********* DIAGNOSTIC PRINTOUT                                          BACK061
+C*********DIAGNOSTIC PRINTOUT                                          BACK061
       WRITE(6,*)'(8HBACK UP3,0.)'                                       BACK062
       MODE=1                                                            BACK063
       RSTART=1.                                                         BACK064
       CALL RKAM                                                         BACK065
    40 RSTART=1.                                                         BACK066
    50 THERE=.TRUE.                                                      BACK067
-C********* RESET STANDARD MODE AND INTEGRATION TYPE                     BACK068
+C*********RESET STANDARD MODE AND INTEGRATION TYPE                     BACK068
    60 MODE=INTYP                                                        BACK069
       STEP=STEP1                                                        BACK070
       RETURN                                                            BACK071
@@ -726,24 +726,24 @@ C********* RESET STANDARD MODE AND INTEGRATION TYPE                     BACK068
       EQUIVALENCE (EARTHR,W(2)),(INTYP,W(41)),(STEP1,W(44))             GRAZ005
       REAL INTYP                                                        GRAZ006
       LOGICAL GROUND,PERIGE,THERE,MINDIS,NEWRAY                         GRAZ007
-C    
+C
       THERE=.FALSE.                                                     GRAZ027
-C********* DIAGNOSTIC PRINTOUT                                          GRAZ028
+C*********DIAGNOSTIC PRINTOUT                                          GRAZ028
       WRITE(6,*)'(8HGRAZE 0 ,0.)'                                       GRAZ029
       IF (SMT.GT.ABS(R(1)-EARTHR-HS)) GO TO 30                          GRAZ030
       DO 20 I=1,10                                                      GRAZ031
       STEP=-R(4)/DRDT(4)                                                GRAZ032
      
 C*******************************************************************************
-C     NB: La variabile STP è definita ma non inizializzata,             
-C         quindi si omette la seguente istruzione                       
-C         che potrebbe dar luogo a valori aleatori.                     
+C NB: The STP variable is defined but not initialized,
+C then the following statement is omitted
+C which could give rise to random values.
 C*******************************************************************************
 C      STEP=SIGN(AMIN1(ABS(STP),ABS(STEP)),STEP)                         GRAZ033
 C*******************************************************************************
      
       IF (ABS(R(4)).LE.1.E-6.AND.ABS(STEP).LT.1.) GO TO 60              GRAZ034
-C********* DIAGNOSTIC PRINTOUT                                          GRAZ035
+C*********DIAGNOSTIC PRINTOUT                                          GRAZ035
       WRITE(6,*)'(8HGRAZE 1 ,0.)'                                       GRAZ036
       MODE=1                                                            GRAZ037
       RSTART=1.                                                         GRAZ038
@@ -752,17 +752,17 @@ C********* DIAGNOSTIC PRINTOUT                                          GRAZ035
       IF (DRDT(4)*(R(1)-EARTHR-HS).LT.0.) GO TO 30                      GRAZ041
       IF(R(5).EQ.0..AND.R(6).EQ.0.) GO TO 60                            GRAZ042
    20 CONTINUE                                                          GRAZ043
-C********* IF A CLOSEST APPROACH COULD NOT BE FOUND IN 10 STEPS, IT     GRAZ044
-C********* PROBABLY MEANS THAT THE RAY INTERSECTS THE HEIGHT HS         GRAZ045
+C*********IF A CLOSEST APPROACH COULD NOT BE FOUND IN 10 STEPS, IT     GRAZ044
+C*********PROBABLY MEANS THAT THE RAY INTERSECTS THE HEIGHT HS         GRAZ045
    30 CONTINUE                                                          GRAZ046
-C********* DIAGNOSTIC PRINTOUT                                          GRAZ047
+C*********DIAGNOSTIC PRINTOUT                                          GRAZ047
       WRITE(6,*)' (8HBACK UP2,0.)'                                      GRAZ048
       MODE=1                                                            GRAZ049
-C********* ESTIMATE DISTANCE TO NEAREST INTERSECTION OF RAY WITH HEIGHT GRAZ050
-C********* HS BEHIND THE PRESENT RAY POINT                              GRAZ051
+C*********ESTIMATE DISTANCE TO NEAREST INTERSECTION OF RAY WITH HEIGHT GRAZ050
+C*********HS BEHIND THE PRESENT RAY POINT                              GRAZ051
      
 C*******************************************************************************
-C     ERRATA CORRIGE DA DISPENSE DI JONES STEVENSON                     
+C CORRIGE CORRIGE FROM JONES STEVENSON'S DISPENSE
 C*******************************************************************************
 C      STEP=(-R(4)-SQRT(R(4)**2-2.*(R(1)-EARTHR-HS)*DRDT(4)))/DRDT(4)    GRAZ052
       H=R(1)-EARTHR                                                     GRAZ052BIS
@@ -772,39 +772,39 @@ C*******************************************************************************
       RSTART=1.                                                         GRAZ053
       CALL RKAM                                                         GRAZ054
       RSTART=1.                                                         GRAZ055
-C********* FIND NEAREST INTERSECTION OF RAY WITH HEIGHT HS              GRAZ056
+C*********FIND NEAREST INTERSECTION OF RAY WITH HEIGHT HS              GRAZ056
       DO 40 I=1,10                                                      GRAZ057
       STEP=-(R(1)-EARTHR-HS)/DRDT(1)                                    GRAZ058
      
 C*******************************************************************************
-C     NB: La variabile STP è definita ma non inizializzata,             
-C         quindi si omette la seguente istruzione                       
-C         che potrebbe dar luogo a valori aleatori.                     
+C NB: The STP variable is defined but not initialized,
+C then the following statement is omitted
+C which could give rise to random values.
 C*******************************************************************************
 C      STEP=SIGN(AMIN1(ABS(STP),ABS(STEP)),STEP)                         GRAZ059
 C*******************************************************************************
      
 C*******************************************************************************
-C     ERRATA CORRIGE DA DISPENSE DI JONES STEVENSON                     
+C CORRIGE CORRIGE FROM JONES STEVENSON'S DISPENSE
 C*******************************************************************************
 C      IF(ABS(R(1)-EARTHR-HS).LT..5E-4.AND.ABS(STEP).LT.1.) GO TO 60     GRAZ060
       IF(ABS(R(1)-EARTHR-HS).LT..5E-4.AND.ABS(STEP).LT.1.) GO TO 50     GRAZ060BIS
 C*******************************************************************************
      
-C********* DIAGNOSTIC PRINTOUT                                          GRAZ061
+C*********DIAGNOSTIC PRINTOUT                                          GRAZ061
       WRITE(6,*)'(8HBACK UP3,0.)'                                       GRAZ062
       MODE=1                                                            GRAZ063
       RSTART=1.                                                         GRAZ064
       CALL RKAM                                                         GRAZ065
    40 RSTART=1.                                                         GRAZ066
    50 THERE=.TRUE.                                                      GRAZ067
-C********* RESET STANDARD MODE AND INTEGRATION TYPE                     GRAZ068
+C*********RESET STANDARD MODE AND INTEGRATION TYPE                     GRAZ068
    60 MODE=INTYP                                                        GRAZ069
       STEP=STEP1                                                        GRAZ070
       RETURN                                                            GRAZ071
          END                                                            GRAZ072-
       SUBROUTINE POLCAR                                                 POLC001
-C                                                                       POLC002
+C POLC002
       COMMON /COORD/ S,X0(6),GG(6),R0(4),VERT                           POLC003
       COMMON /CONST/ PI,PIT2,PID2,DEGS,RAD,K,C,LOGTEN                   POLC004
       COMMON R(20),T,STP,DRDT(20),N2                                    POLC005
@@ -830,7 +830,7 @@ C          VERTICAL INCIDENCE                                           POLC020
       R0(4)=SIGN (1.,R(4))                                              POLC025
       RETURN                                                            POLC026
          END                                                            POLC026-
-C                                                                       POLC027
+C POLC027
 C          STEPS THE RAY A DISTANCE S, AND THEN                         POLC028
 C          CONVERTS CARTESIAN COORDINATES TO SPHERICAL COORDINATES      POLC029
       SUBROUTINE CARPOL                                                 POLC030
@@ -911,7 +911,7 @@ C          RUNGE-KUTTA                                                  RKAM028
       DO 150 I=1,NN                                                     RKAM048
   150 FV(MM,I)=DYDT(I)                                                  RKAM049
       IF (MM.LE.3) GO TO 1001                                           RKAM050
-C                                                                       RKAM051
+C RKAM051
 C          ADAMS-MOULTON                                                RKAM052
  2000 DO 2048 I=1,NN                                                    RKAM053
       DEL=STEP*(55.*FV(4,I)-59.*FV(3,I)+37.*FV(2,I)-9.*FV(1,I))/24.     RKAM054
@@ -1172,7 +1172,7 @@ C      ENTRY MAGY                                                        DIPO008
          END                                                            DIPO023-
       SUBROUTINE ELECTX                                                 ELECTX01
 C        CALCULATES ELECTRON DENSITY AND GRADIENT FROM ACQUIRED         ELECTX02
-C        PROFILES PERFORMING A POLINOMIAL INTERPOLATION                 ELECTX03
+C PROFILES PERFORMING A POLYNOMIAL INTERPOLATION ELECTX03
 C ******************************************************************************
      
       DIMENSION FN2C(600,10,25)                                         
@@ -1206,9 +1206,9 @@ C ******************************************************************************
       LATOLD=-1.                                                        ELECTX15
       LONOLD=-1.                                                        ELECTX16
 C ******************************************************************************
-C     ALEX: Lettura file 'GRIDPROFILES.txt',                            
-C           scrittura file 'GRIDPROFILES_TEST.txt',                     
-C           inizializzazione matrice per "plasma frequency profiles" FNC(K,J,I) 
+C     ALEX: Lettura file 'GRIDPROFILES.txt',
+C           scrittura file 'GRIDPROFILES_TEST.txt',
+C matrix initialisation for "plasma frequency profiles" FNC (K, J, I)
 C ******************************************************************************
       CALL GRIDPROFILES                                                         GPROF000
 C ******************************************************************************
@@ -1218,13 +1218,13 @@ C ******************************************************************************
       IF(JLAT.EQ.LATOLD.AND.JLON.EQ.LONOLD) GO TO 33                    ELECTX20
       IF (JLAT.NE.LATOLD) LATOLD=JLAT                                   ELECTX21
       IF (JLON.NE.LONOLD) LONOLD=JLON                                   ELECTX22
-C ******  FIND A PARAMETER TO EXTRAPOLATE THE ELECTRONIC DENSITY   *****ELECTX23
+C ****** FIND A PARAMETER TO EXTRAPOLATE THE ELECTRONIC DENSITY   *****ELECTX23
 C ******  (BOTTOM PROFILE) NORMALIZE ITS VALUES TO OBTAIN X*F2     *****ELECTX24
 C ******   FIND THE HEIGHT OF THE MAXIMUM                ***************ELECTX25
 C      IF(FN2C(1,JLAT,JLON).NE.0.)                                               GPROF000
 C     1A=ALOG(FN2C(2,JLAT,JLON)/FN2C(1,JLAT,JLON))/(HPC(2)-HPC(1))               GPROF000
       NMAX=1                                                            ELECTX26
-      DO NH=1,NOC                                                       
+      DO NH=1,NOC
 C      FN2C(NH,JLAT,JLON)=K*FN2C(NH,JLAT,JLON)                                   GPROF000
       FN2C(NH,JLAT,JLON)=FNC(NH,JLAT,JLON)**2                                   GPROF000
      
@@ -1232,7 +1232,7 @@ C      FN2C(NH,JLAT,JLON)=K*FN2C(NH,JLAT,JLON)                                  
       IF (NH.EQ.NOC) GO TO 4                                            
       ENDDO                                                             
 C*******************************************************************************
-C     POLINOMIAL INTERPOLATION IN THE INTERVAL OF VALUES FN2C           
+C     POLINOMIAL INTERPOLATION IN THE INTERVAL OF VALUES FN2C
 C*******************************************************************************
     4 DO 10 I=1,NOC-3                                                   
       DO 22 MP=1,4                                                      
@@ -1287,12 +1287,12 @@ C ******************************************************************************
    50 IF (PERT.NE.0.) CALL ELECT1                                       ELECTX42
      
 C*******************************************************************************
-C     ALEX: Si è risolto un BUG                                         
+C     ALEX: Si ï¿½ risolto un BUG                                         
 C           dovuto ad una condizione troppo restrittiva per cui         
 C           la stampa su schermo                                        
 C           delle coordinate per il raggio d'onda R(1),R(2),R(3)        
 C           avveniva solo quando                                        
-C           il trasmettitore era più in alto del ricevitore,            
+C           il trasmettitore era piï¿½ in alto del ricevitore,            
 C           i.e., H.GE.RCVRH .                                          
 C*******************************************************************************
 C      IF (X.EQ.0..AND.H.GE.RCVRH) PRINT 1234, R(1),R(2),R(3)            ELECTX43

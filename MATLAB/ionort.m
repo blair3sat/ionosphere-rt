@@ -4,7 +4,7 @@ function ionort( default, ionort_model )
 
 format long;
 
-% Path delle librerie / funzioni aggiuntive
+% Path of additional libraries /functions
 path(path, 'lib');
 path(path, 'lib\export_fig');
 
@@ -13,32 +13,32 @@ main = struct2cell(default.main);
 options = struct2cell(default.options);
 parameters = struct2cell(default.parameters);
 
-% Creazione del file di variabili necessario al programma Fortran
+% Creation of the variable file necessary for the Fortran program
 fid = fopen('source\DATA_IN.txt','w');
 fprintf(fid, '%10.10f\n', str2double(main));
 fprintf(fid, '%10.10f\n', str2double(options));
 fprintf(fid, '%10.10f\n', str2double(parameters));
 fclose(fid);
 
-% Esecuzione programma ionort.exe nella cartella 'source'
+% Run ionort.exe program in the 'source' folder
 oldFolder = cd('source');   
 [status,result] = system( ['ionort_', ionort_model] );
 cd(oldFolder);
 
-% Conversione output in matrice numerica
+% Converting output to a numerical matrix
 coordinates = str2num(result);
 
-% Eliminazione dei duplicati (righe con uguali coordinate)
+% Elimination of duplicates (lines with equal coordinates)
 coordinates( find( diff(coordinates(:,1) ) == 0 & diff(coordinates(:,2) ) == 0 & diff(coordinates(:,3) ) == 0 ), : ) = [];
 
-% Ricerca della coordinata speciale "0 0 0": flag di chiusura di ogni raggio
+% Search for the special coordinate "0 0 0": closing flag of each beam
 split_coordinates = find( coordinates(:,1) == 0 & coordinates(:,2) == 0 & coordinates(:,3) == 0 );
 
-% CICLO PER OGNI RAGGIO TROVATO
+% CYCLE FOR EVERY RAY FOUND
 for i = 0 : length( split_coordinates ) - 1
     
     if ( length( split_coordinates ) == 1 )
-        % il raggio è uno solo, non serve dividerlo
+        % the radius is only one, there is no need to divide it
         coordinate = coordinates;
     else
         
@@ -58,32 +58,32 @@ for i = 0 : length( split_coordinates ) - 1
         
     end
     
-    % Coordinate speciali del raggio
+    % Special radius coordinates
     %* NOTA: IONO IN NON DOVREBBE ESSERE - 1 *%
     ray_ionoin = find(coordinate(:,1) == 111.1 & coordinate(:,3) == 1) - 1; % RAY IN THE IONOSPHERE
     ray_apogee = find(coordinate(:,1) == 111.1 & coordinate(:,3) == 2) - 1; % APOGEE
     ray_ionoout = find(coordinate(:,1) == 111.1 & coordinate(:,3) == 3) - 1; % RAY OUT THE IONOSPHERE
     
-    % Coordinate speciali dei casi critici
+    % Special coordinates of critical cases
     case_penetrate = find(coordinate(:,1) == 222.2 & coordinate(:,3) == 0); % RAY PENETRATE
     case_closest = find(coordinate(:,1) == 222.2 & coordinate(:,3) == 1); % CLOSEST APPROACH : MIN. DIST.
     case_reflection = find(coordinate(:,1) == 222.2 & coordinate(:,3) == 2); % GROUND REFLECTION
     case_integration = find(coordinate(:,1) == 222.2 & coordinate(:,3) == 3); % INTEGRATION FAILURE
     
-    % Coordinate speciali dei casi critici
+    % Special coordinates of critical cases
     result_groupdelay = coordinate( find(coordinate(:,1) == 333.3 & coordinate(:,3) == 1), 2 ); % GROUP DELAY
     result_grouppath = coordinate( find(coordinate(:,1) == 333.3 & coordinate(:,3) == 2), 2 ); % GROUP PATH
-    result_plasmafreq = coordinate( find(coordinate(:,1) == 333.3 & coordinate(:,3) == 3), 2 ); % TRANSMITTER IN EVANESCENT REGION: CRITICAL PLASMA FREQUENCY
+    result_plasmafreq = coordinate( find(coordinate(:,1) == 333.3 & coordinate(:,3) == 3), 2 ); % TRANSMITTER IN EVANESCENT REGION: CRITICAL PLASMAFREQUENCY
 
-    % Eliminazione delle righe con valori particolari
-    % OTTIMIZZABILE: so già quali righe togliere
+    % Deleting rows with particular values
+    OPTIMIZABLE%: I already know which lines to remove
     coordinate( find( coordinate(:,1) == 0 & coordinate(:,2) == 0 & coordinate(:,3) == 0 ), :) = [];
     coordinate( find( coordinate(:,1) == 111.1 ), :) = [];
     coordinate( find( coordinate(:,1) == 222.2 ), :) = [];
     coordinate( find( coordinate(:,1) == 333.3 ), :) = [];
     
-    % correzione dovuta allo spostamento delle coordinate dopo
-    % l'eliminazione dei punti speciali.
+    % correction due to shifting of coordinates afterwards
+    % the elimination of special points.
     if( ~isempty( ray_ionoin ) )
         if( ~isempty( ray_apogee ) ) ray_apogee = ray_apogee - 1; end
         if( ~isempty( ray_ionoout ) ) ray_ionoout = ray_ionoout - 2; end
@@ -92,7 +92,7 @@ for i = 0 : length( split_coordinates ) - 1
         if( ~isempty( ray_ionoout ) ) ray_ionoout = ray_ionoout - 1; end
     end
     
-    % CASO NOTEVOLE frequenza di plasma critica: il raggio non parte
+    % SIGNIFICANT CASE critical plasma frequency: the beam does not start
     if( ~isempty( result_plasmafreq ) )
         
         doPlot = false;
@@ -104,17 +104,17 @@ for i = 0 : length( split_coordinates ) - 1
         
         doPlot = true;
 
-        % Lettura colonne
+        % Reading columns
         rho = coordinate(:,1);
         phi = coordinate(:,2);
         theta = coordinate(:,3);
 
-        % Conversione e adattamento dei valori
+        % Conversion and adaptation of values
         radius = rho .* 1000;
         lat = degrees( pi/2 - phi );
         lon = degrees( theta );
 
-        % Risultati: latitudine, longitudine, apogeo (km), ritardo di gruppo (ms), percorso di gruppo (km)
+        % Results: latitude, longitude, apogee (km), group delay (ms), group route (km)
         h = findobj('Tag', 'result_latitude');
         set(h, 'String', lat( length(lat) ) );
 
@@ -138,7 +138,7 @@ for i = 0 : length( split_coordinates ) - 1
         
     end
 
-    % parametri e risultati per la stringa
+    % parameters and results for the string
     frequency = num2str( str2double( default.main.fbeg ) + str2double( default.main.fstep ) * i );
     elevation = num2str( degrees( str2double( default.main.elbeg ) + str2double( default.main.elstep ) * i ) );
     azimuth = num2str( degrees( str2double( default.main.azbeg ) + str2double( default.main.azstep ) * i ) );
@@ -149,7 +149,7 @@ for i = 0 : length( split_coordinates ) - 1
     ray_apogee = coordinate( ray_apogee ) - str2num( default.main.earthr );
     if ( default.main.ray == '-1' ) ray_extra = ' - RayExtra'; else ray_extra = ''; end
 
-    % Stringa di testo con i risultati
+    % Text string with results
     stringa = ['MAIN PARAMETERS \n', ...
                '----------------------- \n', ...
                'Latitude    = ', lat_start, ' N \n', ...
@@ -192,76 +192,76 @@ for i = 0 : length( split_coordinates ) - 1
         stringa = [stringa '\nINTEGRATION FAILURE !!!'];
     end
     
-    % Nome del file da salvare in cartella /results
+    % Name of the file to be saved in the /results folder
     filename = ['results\LAT ', lat_start, ' - LON ', lon_start, ' - FR ', frequency, ' - EL ', elevation, ' - AZ ', azimuth, ' - Tx ', transmitter, ' - Rx ', receiver, ' - ', ionort_model, ray_extra];
            
-    % Salvataggio stringa risultati
+    % Saving result string
     dlmwrite( [ filename, '.txt' ], ...
               sprintf(stringa), 'delimiter', '', 'newline', 'pc');
     
-    % % Salvataggio semplici variabili output
+    %% Saving simple output variables
     % eval(['save ' [filename,'.num'] ' final_lat final_long apogee group_delay group_path -ascii']);
 
 
     if( doPlot )
         
-        %% Visualizzazione in 3D
+        %% 3D visualization
 
-        % Focus sulla figura che rappresenta la Terra
+        % Focus on the figure representing the Earth
         h = findobj('Tag', 'earth');
         set(gcf,'CurrentAxes', h);
 
         hold on;
 
-        % Conversione da coordinate sferiche a cartesiane
+        % Conversion from spherical to Cartesian coordinates
         [x1,y1,z1] = sph2xyz(radians(lon), radians(lat), radius);
 
         lonpos = lon(1) + 90;
 
-        % Zoom e centramento
+        % Zoom and Centering
         set( gca, 'CameraTargetMode', 'manual', 'CameraTarget', [x1(1) y1(1) z1(1)], 'CameraViewAngle', 2.5 );
         view([lonpos lat(1)]);
         %set(gca,'CameraPositionMode','manual','CameraPosition',[sin(radians(lonpos))*sin(radians(lat(1)))*110585300 -cos(radians(lonpos))*cos(radians(lat(1)))*110585300 71082900]);
 
-        % Raggio completo
+        % Full radius
         plot3( x1, y1, z1, ...
               '-w', ...
               'LineWidth', 1);
 
-        % Raggio parte e arriva sotto la ionosfera
+        % Ray starts and arrives under the ionosphere
         if( ~isempty(ray_ionoin) && ~isempty(ray_ionoout) )
 
-            % Raggio colorato nella ionosfera
+            % Colored ray in the ionosphere
             plot3( x1( ray_ionoin : ray_ionoout ), ...
                    y1( ray_ionoin : ray_ionoout ), ...
                    z1( ray_ionoin : ray_ionoout ), ...
                   ':y', ...
                   'LineWidth', 2);
 
-        % Raggio parte da sopra la ionosfera ma raggiunge il ricevitore a terra
+        % Ray starts from above the ionosphere but reaches the receiver on the ground
         elseif( isempty(ray_ionoin) && ~isempty(ray_ionoout) )
 
-            % Raggio colorato nella ionosfera
+            % Colored ray in the ionosphere
             plot3( x1( 1 : ray_ionoout ), ...
                    y1( 1 : ray_ionoout ), ...
                    z1( 1 : ray_ionoout ), ...
                   ':y', ...
                   'LineWidth', 2);
 
-        % Raggio parte da sotto la ionosfera e la buca      
+        % Radius starts from under the ionosphere and the hole
         elseif( ~isempty(ray_ionoin) && isempty(ray_ionoout) )
 
-            % Raggio colorato nella ionosfera
+            % Colored ray in the ionosphere
             plot3( x1( ray_ionoin : length(x1) ), ...
                    y1( ray_ionoin : length(y1) ), ...
                    z1( ray_ionoin : length(z1) ), ...
                   ':y', ...
                   'LineWidth', 2);
 
-        % Raggio parte da sopra la ionosfera e non arriva mai a terra
+        % Radius starts from above the ionosphere and never reaches the ground
         elseif( isempty(ray_ionoin) && isempty(ray_ionoout) )
 
-            % Raggio colorato nella ionosfera
+            % Colored ray in the ionosphere
             plot3( x1( 1 : length(x1) ), ...
                    y1( 1 : length(y1) ), ...
                    z1( 1 : length(z1) ), ...
@@ -270,16 +270,16 @@ for i = 0 : length( split_coordinates ) - 1
 
         end
 
-        % Punto di partenza
+        % Start point
         plot3( x1(1), y1(1), z1(1), ...
               'ks', ...
               'MarkerFaceColor', [0 1 0], ...
               'MarkerSize', 8);
 
-        % Punto di uscita
+        % Exit point
         if( ~isempty(ray_ionoout) )
 
-            % sotto la ionosfera
+            % under the ionosphere
             plot3( x1( length(x1) ), y1( length(y1) ), z1( length(z1) ), ...
                   'rx', ...
                   'MarkerFaceColor', [1 0 0], ...
@@ -291,13 +291,13 @@ for i = 0 : length( split_coordinates ) - 1
 
         else
 
-            % dentro la ionosfera e oltre
+            % inside the ionosphere and beyond
             plot3( x1( length(x1) ), y1( length(y1) ), z1( length(z1) ), ...
                   'r^', ...
                   'MarkerFaceColor', [1 1 1], ...
                   'MarkerSize', 5);
 
-            % MARKER DI USCITA
+            OUTPUT MARKER
 
         end
 
@@ -305,10 +305,10 @@ for i = 0 : length( split_coordinates ) - 1
 
         zoom on;
 
-        % Altezza da terra in km
+        % Ground clearance in km
         altitude = ( radius - str2num( default.main.earthr ) * 1000 ) ./ 1000;
 
-        % Focus sulla figura
+        % Focus on the figure
         h = findobj('Tag','az');
         set(gcf,'CurrentAxes',h);
 
@@ -322,7 +322,7 @@ for i = 0 : length( split_coordinates ) - 1
 
         %%% PLOT
 
-        % Raggio parte da sotto ionosfera e torna a terra
+        % Ray starts from under the ionosphere and returns to the ground
         if( ~isempty(ray_ionoin) && ~isempty(ray_ionoout)  )
 
             plot( ray( 1 : ray_ionoin ), ...
@@ -334,7 +334,7 @@ for i = 0 : length( split_coordinates ) - 1
             plot( ray( ray_ionoout : length(ray) ), ...
                   altitude( ray_ionoout : length(altitude) ) );
 
-         % Raggio parte da sotto la ionosfera e la buca      
+         % Radius starts from under the ionosphere and the hole
         elseif( ~isempty(ray_ionoin) && isempty(ray_ionoout) )
 
             plot( ray( 1 : ray_ionoin ), ...
@@ -343,7 +343,7 @@ for i = 0 : length( split_coordinates ) - 1
             cline( ray( ray_ionoin : length(ray) ), ...
                    altitude( ray_ionoin : length(altitude) ));
 
-        % Raggio parte da sopra la ionosfera ma raggiunge il ricevitore a terra
+        % Ray starts from above the ionosphere but reaches the receiver on the ground
         elseif( isempty(ray_ionoin) && ~isempty(ray_ionoout) )
 
             cline( ray( 1 : ray_ionoout ), ...
@@ -352,7 +352,7 @@ for i = 0 : length( split_coordinates ) - 1
             plot( ray( ray_ionoout : length(ray) ), ...
                   altitude( ray_ionoout : length(altitude) ) );
 
-        % Raggio parte da sopra la ionosfera e non arriva mai a terra
+        % Radius starts from above the ionosphere and never reaches the ground
         elseif( isempty(ray_ionoin) && isempty(ray_ionoout) )
 
             cline( ray( 1 : length(ray) ), ...
@@ -362,7 +362,7 @@ for i = 0 : length( split_coordinates ) - 1
 
         %%% MARKER
 
-        % Trasmittente
+        % Transmitter
         mark_trans = plot( ray(1), altitude(1), ...
                            'ks', ...
                            'MarkerFaceColor', [0 1 0]);
@@ -370,7 +370,7 @@ for i = 0 : length( split_coordinates ) - 1
         legenda_punti = [ mark_trans ];
         legenda_label = {'Transmitter'};
 
-        % Punto di ingresso nella ionosfera
+        % Entry point into the ionosphere
         if( ~isempty(ray_ionoin) )
             mark_in = plot( ray( ray_ionoin ), altitude( ray_ionoin ), ...
                             'bo', ...
@@ -381,7 +381,7 @@ for i = 0 : length( split_coordinates ) - 1
         end
 
 
-        % Punto di uscita dalla ionosfera
+        % Exit point from the ionosphere
         if( ~isempty(ray_ionoout) )
             mark_out = plot( ray( ray_ionoout ), altitude( ray_ionoout ), ...
                              'bo', ...
@@ -394,7 +394,7 @@ for i = 0 : length( split_coordinates ) - 1
         if( isempty( case_closest ) && isempty( case_reflection ) && isempty( case_integration ) )
             
             if( isempty( case_penetrate ) )
-                % Ricevitore
+                % Receiver
                 mark_receiver = plot( ray( length(ray) ), altitude( length(altitude) ), ...
                                       'rx', ...
                                       'MarkerFaceColor', [1 0 0], ...
@@ -437,7 +437,7 @@ for i = 0 : length( split_coordinates ) - 1
         end
 
 
-        % Legenda
+        % Legend
         legend( legenda_punti, legenda_label );
 
     end
