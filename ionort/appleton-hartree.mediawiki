@@ -1,0 +1,89 @@
+The '''Appleton–Hartree equation''', sometimes also referred to as the '''Appleton–Lassen equation''' is a mathematical expression that describes the [[refractive index]] for [[electromagnetic wave]] propagation in a cold magnetized [[plasma (physics)|plasma]]. The Appleton–Hartree equation was developed independently by several different scientists, including [[Edward Victor Appleton]], [[Douglas Hartree]] and German radio physicist [[H. K. Lassen]].<ref name='lassen'>Lassen, H., ''I. Zeitschrift für Hochfrequenztechnik'', 1926.  Volume 28, pp. 109–113</ref>  Lassen's work, completed two years prior to Appleton and five years prior to Hartree, included a more thorough treatment of collisional plasma; but, published only in German, it has not been widely read in the English speaking world of radio physics.<ref name='suchy'>C. Altman, K. Suchy.  ''Reciprocity, Spatial Mapping and Time Reversal in Electromagnetics – Developments in Electromagnetic Theory and Application''.  Pp 13–15.  Kluwer Academic Publishers, 1991.  Also available online, [https://books.google.com/books?id=bQmQil-dMBUC Google Books Scan]</ref>  Further, regarding the derivation by Appleton, it was noted in the historical study by Gilmore that [[Wilhelm Altar]] (while working with Appleton) first calculated the dispersion relation in 1926.<ref name='gilmore'>C. Stewart Gilmore (1982), Proc. Am. Phil. S, Volume 126. pp. 395</ref>
+
+==Equation==
+The [[dispersion relation]] can be written as an expression for the frequency (squared), but it is also common to write it as an expression for the [[index of refraction]]:
+
+:<math>n^2 = \left(\frac{ck}{\omega}\right)^2.</math>
+
+===Full equation===
+The equation is typically given as follows:<ref>{{Citation | last = Helliwell | first = Robert | date = 2006  | title = Whistlers and Related Ionospheric Phenomena | edition = 2nd | location = Mineola, NY | publisher = Dover | pages = 23–24}}</ref>
+
+:<math>n^2 = 1 - \frac{X}{1 - iZ - \frac{\frac{1}{2}Y^2\sin^2\theta}{1 - X - iZ} \pm \frac{1}{1 - X - iZ}\left(\frac{1}{4}Y^4\sin^4\theta + Y^2\cos^2\theta\left(1 - X - iZ\right)^2\right)^{1/2}}</math>
+
+or, alternatively, with damping term <math>Z = 0</math> and rearranging terms:<ref>{{Citation | last = Hutchinson | first = I.H. | date = 2005  | title = Principles of Plasma Diagnostics | edition = 2nd | location = New York, NY | publisher = [[Cambridge University Press]] | pages = 109}}</ref>
+
+:<math>n^2 = 1 - \frac{X\left(1-X\right)}{1 - X - {\frac{1}{2}Y^2\sin^2\theta} \pm \left(\left(\frac{1}{2}Y^2\sin^2\theta\right)^2 + \left(1-X\right)^2Y^2\cos^2\theta\right)^{1/2}}</math>
+
+===Definition of terms===
+
+<math>n</math> = complex refractive index
+
+<math>i</math> = <math>\sqrt{-1}</math>
+
+<math>X = \frac{\omega_0^2}{\omega^2}</math>
+
+<math>Y = \frac{\omega_H}{\omega}</math>
+
+<math>Z = \frac{\nu}{\omega}</math>
+
+<math>\nu</math> = electron collision frequency
+
+<math>\omega = 2\pi f</math> (radial frequency)
+
+<math>f</math> = wave frequency (cycles per second, or [[Hertz]])
+
+<math>\omega_0 = 2\pi f_0 = \sqrt{\frac{Ne^2}{\epsilon_0 m}}</math> = electron [[plasma frequency]]
+
+<math>\omega_H = 2\pi f_H = \frac{B_0 |e|}{m}</math> = electron [[gyro frequency]]
+
+<math>\epsilon_0</math> = [[permittivity of free space]]
+
+<math>B_0</math> = ambient [[magnetic field]] strength
+
+<math>e</math> = [[electron charge]]
+
+<math>m</math> = [[electron mass]]
+
+<math>\theta</math> = angle between the ambient [[magnetic field]] vector and the [[wave vector]]
+
+===Modes of propagation===
+
+The presence of the <math>\pm</math> sign in the Appleton–Hartree equation gives two separate solutions for the refractive index.<ref>{{Citation | last = Bittencourt | first = J.A. | date = 2004  | title = Fundamentals of Plasma Physics | edition = 3rd | location = New York, NY | publisher = [[Springer-Verlag]] | pages = 419–429}}</ref> For propagation perpendicular to the magnetic field, i.e., <math>\mathbf k\perp \mathbf B_0</math>, the '+' sign represents the "ordinary mode," and the '−' sign represents the "extraordinary mode." For propagation parallel to the magnetic field, i.e., <math>\mathbf k\parallel \mathbf B_0</math>, the '+' sign represents a left-hand circularly polarized mode, and the '−' sign represents a right-hand circularly polarized mode. See the article on [[electromagnetic electron wave]]s for more detail.
+
+<math>\mathbf k</math> is the vector of the propagation plane.
+
+==Reduced forms==
+
+===Propagation in a collisionless plasma===
+If the electron collision frequency <math>\nu</math> is negligible compared to the wave frequency of interest <math>\omega</math>, the plasma can be said to be "collisionless." That is, given the condition
+
+:<math>\nu \ll \omega</math>,
+
+we have
+
+:<math>Z = \frac{\nu}{\omega} \ll 1</math>,
+
+so we can neglect the <math>Z</math> terms in the equation. The Appleton–Hartree equation for a cold, collisionless plasma is therefore,
+
+:<math>n^2 = 1 - \frac{X}{1 - \frac{\frac{1}{2}Y^2\sin^2\theta}{1 - X} \pm \frac{1}{1 - X}\left(\frac{1}{4}Y^4\sin^4\theta + Y^2\cos^2\theta\left(1 - X\right)^2\right)^{1/2}}</math>
+
+===Quasi-longitudinal propagation in a collisionless plasma===
+If we further assume that the wave propagation is primarily in the direction of the magnetic field, i.e., <math>\theta \approx 0</math>, we can neglect the <math>Y^4\sin^4\theta</math> term above. Thus, for quasi-longitudinal propagation in a cold, collisionless plasma, the Appleton–Hartree equation becomes,
+
+:<math>n^2 = 1 - \frac{X}{1 - \frac{\frac{1}{2}Y^2\sin^2\theta}{1 - X} \pm Y\cos\theta}</math>
+
+==See also==
+* [[Mary Taylor Slow]]
+* [[Plasma (physics)]]
+* [[Waves in plasmas]]
+* [[List of plasma (physics) articles]]
+
+==References==
+{{refbegin}}
+;Citations and notes
+{{refend}}
+{{reflist}}
+
+{{DEFAULTSORT:Appleton-Hartree Equation}}
+[[Category:Electromagnetic radiation]]
+[[Category:Waves in plasmas]]

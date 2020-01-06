@@ -1,0 +1,87 @@
+# Ionospheric Raytracing
+
+The idea is to set up equations to simulate the ray of an ionosonde as it travels through the atmosphere.
+
+## Introduction
+
+There are several basic steps to the algorithm.
+
+1. Outline the generic iteration/integration solving process. (In FORTRAN they did this manually, here we don't, we just specify the problem to solve)
+2. The problem is as follows: calculate the Hamiltonian as defined in the paper
+3. The Hamiltonian requires the calculation of the refractive index for a given discrete grid box using a given ionospheric model
+
+
+## solving
+
+## Hamiltonian
+
+The Hamiltonian is defined in equation A.7 in the paper.
+
+```julia
+using PhysicalConstants.CODATA2018
+using DiffEqPhysics
+using DifferentialEquations
+function GenerateHamiltonian(freq)
+    function Hamiltonian((r, theta, phi), (k_r, k_theta, k_phi))
+        1/2((SpeedOfLightInVacuum^2/freq^2)(k_r^2 + k_theta^2 + k_phi^2) - n^2)
+    end
+    return Hamiltonian
+end
+
+prob = HamiltonianProblem(GenerateHamiltonian(0, 0), (0,0,0), (0,0,0), (0.0, 1.0))
+```
+
+## Refractive Index
+
+Using the Appleton–Hartree equation:
+
+$$
+n^2 = 1 - \frac{X}{1 - iZ - \frac{\frac{1}{2}Y^2\sin^2\theta}{1 - X - iZ} \pm \frac{1}{1 - X - iZ}\left(\frac{1}{4}Y^4\sin^4\theta + Y^2\cos^2\theta\left(1 - X - iZ\right)^2\right)^{1/2}}
+$$
+
+where
+
+
+$$ n = \textbf{complex refractive index} $$
+
+$$ i = \sqrt{-1} $$
+
+$$ X = \frac{\omega_0^2}{\omega^2} $$
+
+$$ Y = \frac{\omega_H}{\omega} $$
+
+$$ Z = \frac{\nu}{\omega} $$
+
+$$ \nu  = \textbf{electron collision frequency} $$
+
+$$ \omega = 2\pi f = \textbf{(radial frequency)} $$ 
+
+$$ f  = \textbf{wave frequency (cycles per second, or Hertz)} $$
+
+
+$$ \omega_0 = 2\pi f_0 = \sqrt{\frac{Ne^2}{\epsilon_0 m}}  = \textbf{electron plasma frequency} $$
+
+$$ \omega_H = 2\pi f_H = \frac{B_0 |e|}{m} = \textbf{electron gyro frequency} $$
+
+$$ \epsilon_0 = \textbf{permitivity of free space}$$ 
+
+$$ B_0  = \textbf{ambient magnetic field strength} $$
+
+$$ e = \textbf{electron charge} $$
+
+$$ m = \textbf{electron mass} $$
+
+$$ \theta = \textbf{angle between the ambient magnetic field vector and the wave vector} $$
+
+```julia
+(bigint(10)^12*ElementaryCharge^2)/(ElectronMass*VacuumElectricPermittivity)
+```
+
+The above should be around 9 Mhz
+
+
+```julia
+function RefractiveIndex()
+
+end
+```

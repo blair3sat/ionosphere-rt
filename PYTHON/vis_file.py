@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-f = open("abc.txt", "r")
+
+#%%
+f = open("./MATLAB/SOURCE/GRIDPROFILES.TXT", "r")
 
 line = f.readline()
 
@@ -42,7 +44,7 @@ while line:
 
     line = f.readline()
 
-
+#%%
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np

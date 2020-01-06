@@ -283,8 +283,8 @@ C     CALCULATES THE RAY PATH                                           TRAC002
      
 C*******************************************************************************
 C ALEX: For each raytracing iteration,
-It was necessary to introduce
-There is a logical control variable
+C It was necessary to introduce
+C There is a logical control variable
 C that forced printing once and only once
 C           su file dell'input '+++ RAY OUT THE IONOSPHERE +++'
 C and from the screen of the special coordinate '111.1 0 3'.
@@ -1108,12 +1108,12 @@ C ******************************************************************************
       PNPT=PNPX*PXPT                                                    WFNC062
      
 C ******************************************************************************
-C     CARLO&ALEX: Se si vogliono smussare le oscillazioni numeriche spurie      
-C                 allora si devono evitare le divergenze,               
-C                 sottostimando l'indice di rifrazione nel vuoto ONE,   
-C                 idealmente pari ad 1.,                                
-C                 di una varianza infinitesimale paragonabile           
-C                 al maximum allowable single step error E1MAX.         
+C CARLO & ALEX: If you want to smooth the spurious numerical oscillations
+C then divergences must be avoided,
+C underestimating the refractive index in vacuum ONE,
+C ideally equal to 1.,
+C of a comparable infinitesimal variance
+C at maximum allowable single step error E1MAX.
 C ******************************************************************************
 C      SPACE=N2.EQ.1.                                                    WFNC063
       ONE=1.                                                                    NEW: ALEX
@@ -1286,15 +1286,15 @@ C ******************************************************************************
    18 X=FN2C(NOC,JLAT,JLON)/F2                                                  GPROF000
    50 IF (PERT.NE.0.) CALL ELECT1                                       ELECTX42
      
-C*******************************************************************************
-C     ALEX: Si � risolto un BUG                                         
-C           dovuto ad una condizione troppo restrittiva per cui         
-C           la stampa su schermo                                        
-C           delle coordinate per il raggio d'onda R(1),R(2),R(3)        
-C           avveniva solo quando                                        
-C           il trasmettitore era pi� in alto del ricevitore,            
-C           i.e., H.GE.RCVRH .                                          
-C*******************************************************************************
+C *******************************************************************************
+C ALEX: A BUG has been resolved
+C due to a too restrictive condition for which
+C screen printing
+C of the coordinates for the wave ray R (1), R (2), R (3)
+C only happened when
+C the transmitter was higher than the receiver,
+C i.e., H.GE.RCVRH.
+C *******************************************************************************
 C      IF (X.EQ.0..AND.H.GE.RCVRH) PRINT 1234, R(1),R(2),R(3)            ELECTX43
       IF (X.EQ.0.) PRINT 1234, R(1),R(2),R(3)                                   AZZ
 C*******************************************************************************
@@ -1377,12 +1377,12 @@ C          USE WHEN AN ELECTRON DENSITY PERTURBATION IS NOT WANTED      ELEC002
       PERT=0.                                                           ELEC007
       RETURN                                                            ELEC008
       END                                                               ELEC009-
-C*******************************************************************************
-C     ADRIANO: Subroutine che stampa su schermo                         
-C              la coordinata speciale '000.0 0 0'                       
-C              per eseguire il necessario split degli step              
-C              alla fine di ogni elaborazione in MATLAB.                
-C*******************************************************************************
+C *******************************************************************************
+C ADRIANO: Subroutine that prints on the screen
+C the special coordinate '000.0 0 0'
+C to perform the necessary split of the steps
+C at the end of each processing in MATLAB.
+C *******************************************************************************
       SUBROUTINE ZERO                                                   ZERO000
       PRINT *,'000.0 0 0'                                               ZERO000
       RETURN                                                            ZERO000
